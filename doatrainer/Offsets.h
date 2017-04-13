@@ -5,9 +5,9 @@
 
 namespace Offsets
 {
-	DWORD money = 0x0; //Adress hajsu
-	DWORD essence = 0x0; //adres essencji
-	DWORD lvl = 0x0; //adres poziomu
+	DWORD money = 0x0;
+	DWORD essence = 0x0;
+	DWORD lvl = 0x0;
 	
 	void calc_money(MemoryMg *mem)
 	{

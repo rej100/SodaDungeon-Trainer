@@ -1,28 +1,26 @@
 #include "stdafx.h"
 #include "MemoryMg.h"
 
-//NAJPIERW PATRZ MemoryMg.h
-
-MemoryMg::MemoryMg(char* processName) : //Definicja wczeœniej zdeklarowanego konstruktora
+MemoryMg::MemoryMg(char* processName) : 
 	processName(processName)
 {
 
 }
 
-MemoryMg::~MemoryMg() //Definicja wczeœniej zdeklarowanego konstruktora
+MemoryMg::~MemoryMg()
 {
 
 }
 
-bool MemoryMg::initialize() // Definicja wczeœniej zdeklarowanej funkcji initialize
+bool MemoryMg::initialize()
 {
-	if ((processHandle = GetProcessByName()) == NULL) //Je¿eli nie mo¿na uzyskaæ Handle do procesu wypisuje waiting for soda dungeon i zwraca false
+	if ((processHandle = GetProcessByName()) == NULL) 
 	{
 		std::cout << "Waiting for Soda Dungeon. " << std::endl;
 		return false;
 	}
 
-	if ((mainModuleBase = GetModuleBase("dungeon.exe", &mainModuleSize)) == NULL) //je¿eli nie mo¿na uzyskaæ adresu modu³u "dungeon.exe" i jego wielkoœci wypisuje module fail i zwraca false
+	if ((mainModuleBase = GetModuleBase("dungeon.exe", &mainModuleSize)) == NULL)
 	{
 		std::cout << "module fail" << std::endl;
 		return false;
@@ -30,15 +28,15 @@ bool MemoryMg::initialize() // Definicja wczeœniej zdeklarowanej funkcji initial
 	return true;
 }
 
-HANDLE MemoryMg::GetProcessByName() // Definicja wczeœniej... Wiesz o co mi chodzi
+HANDLE MemoryMg::GetProcessByName() 
 {
 	DWORD pid = 0;
 
 	HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 	PROCESSENTRY32 process;
 
-	int cj = 9692; //junk code poniewa¿ GetProcessByName w prawie wszystkich haksach jest taki sam
-	int str = 64 + 21 - cj + 92 * cj; //junk code poniewa¿ GetProcessByName w prawie wszystkich haksach jest taki sam
+	int cj = 9692; 
+	int str = 64 + 21 - cj + 92 * cj; 
 
 	ZeroMemory(&process, sizeof(process));
 	process.dwSize = sizeof(process);
@@ -68,7 +66,7 @@ HANDLE MemoryMg::GetProcessByName() // Definicja wczeœniej... Wiesz o co mi chod
 	return NULL;
 }
 
-DWORD MemoryMg::GetModuleBase(LPSTR lpModuleName, int *sizeOut) //Defini...
+DWORD MemoryMg::GetModuleBase(LPSTR lpModuleName, int *sizeOut) 
 {
 	MODULEENTRY32 lpModuleEntry = { 0 };
 	HANDLE hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, processID);
@@ -77,8 +75,8 @@ DWORD MemoryMg::GetModuleBase(LPSTR lpModuleName, int *sizeOut) //Defini...
 	lpModuleEntry.dwSize = sizeof(lpModuleEntry);
 	BOOL bModule = Module32First(hSnapShot, &lpModuleEntry);
 
-	int cj = 9692; //junk code z tego samego powodu co wczeœniej
-	int str = 64 + 21 - cj + 92 * cj; //junk code z tego samego powodu co wczeœniej
+	int cj = 9692; 
+	int str = 64 + 21 - cj + 92 * cj; 
 
 	while (bModule)
 	{
